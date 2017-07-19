@@ -1,4 +1,4 @@
-package com.github.wall2huang.config;
+package com.github.wall2huang.annotation;
 
 import org.springframework.stereotype.Component;
 
