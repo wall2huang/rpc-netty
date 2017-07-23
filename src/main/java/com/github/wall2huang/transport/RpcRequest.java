@@ -15,7 +15,7 @@ public class RpcRequest
 
     private String methodName;
 
-    private Class<?>[] parameterType[];
+    private Class<?>[] parameterType;
 
     private Object[] parameters;
 
@@ -49,12 +49,12 @@ public class RpcRequest
         this.methodName = methodName;
     }
 
-    public Class<?>[][] getParameterType()
+    public Class<?>[] getParameterType()
     {
         return parameterType;
     }
 
-    public void setParameterType(Class<?>[][] parameterType)
+    public void setParameterType(Class<?>[] parameterType)
     {
         this.parameterType = parameterType;
     }

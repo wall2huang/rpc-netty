@@ -3,6 +3,8 @@ package com.github.wall2huang.core;/**
  */
 
 import com.github.wall2huang.annotation.RpcService;
+import com.github.wall2huang.transport.RpcRequest;
+import com.github.wall2huang.transport.RpcResponse;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -41,8 +43,13 @@ public class RpcServer implements ApplicationContextAware, InitializingBean
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception
                         {
-                            // TODO: 2017/7/20 加入处理的handler
-                            socketChannel.pipeline().addLast();
+                            // 添加编码器和解码器
+                            socketChannel.pipeline().addLast(new RpcDecoder(RpcResponse.class));
+                            socketChannel.pipeline().addLast(new RpcEncoder(RpcRequest.class));
+
+                            //添加真正业务处理handler
+
+
                         }
                     });
             ChannelFuture future = serverBootstrap.bind().sync();

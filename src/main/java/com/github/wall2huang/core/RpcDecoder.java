@@ -47,10 +47,8 @@ public class RpcDecoder extends ByteToMessageDecoder
         byteBuf.readBytes(data);
 
         //序列化为对象，添加到out对象列表中去
-        // TODO: 2017/7/23  
-
-
-
+        Object deserialize = SerializationUtil.deserialize(data, genericClass);
+        list.add(deserialize);
 
     }
 }
