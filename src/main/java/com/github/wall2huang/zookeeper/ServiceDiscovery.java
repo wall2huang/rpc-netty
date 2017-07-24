@@ -5,10 +5,13 @@ package com.github.wall2huang.zookeeper;/**
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.framework.recipes.cache.NodeCacheListener;
+import org.apache.zookeeper.server.quorum.Election;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * author : Administrator
@@ -28,6 +31,29 @@ public class ServiceDiscovery
         this.registerAddress = registerAddress;
         init();
 
+    }
+
+    /**
+     * 服务发现
+     * @return
+     */
+    public String discover()
+    {
+        String data = null;
+        int size = dataList.size();
+        if (size > 0)
+        {
+            if (size == 1)
+            {
+                data = dataList.get(0);
+            }
+            else
+            {
+                // TODO: 2017/7/24 ???
+                data = dataList.get(ThreadLocalRandom.current().nextInt(size));
+            }
+        }
+        return data;
     }
 
     private void init() throws Exception

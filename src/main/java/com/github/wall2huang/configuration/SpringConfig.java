@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * author : Administrator
  **/
 @Configuration
-public class ZkClientConfig
+public class SpringConfig
 {
 
     @Bean

@@ -20,6 +20,11 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse>
     private RpcResponse rpcResponse;
     private Object o = new Object();
 
+    public RpcClient(String host, int port)
+    {
+        this.host = host;
+        this.port = port;
+    }
 
     @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, RpcResponse rpcResponse) throws Exception
@@ -31,7 +36,7 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse>
         }
     }
 
-    private RpcResponse send(RpcRequest request) throws InterruptedException
+    public RpcResponse send(RpcRequest request) throws InterruptedException
     {
         NioEventLoopGroup nioEventLoopGroup = new NioEventLoopGroup();
         try
