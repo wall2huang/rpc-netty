@@ -5,8 +5,8 @@ package com.github.wall2huang.core;/**
 import com.github.wall2huang.transport.RpcRequest;
 import com.github.wall2huang.transport.RpcResponse;
 import com.github.wall2huang.zookeeper.ServiceDiscovery;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.awt.*;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
@@ -20,12 +20,12 @@ public class RpcProxy
 
     private String serverAddress;
 
+    @Autowired
     private ServiceDiscovery serviceDiscovery;
 
-    public RpcProxy(String serverAddress, ServiceDiscovery serviceDiscovery)
+    public RpcProxy(String serverAddress)
     {
         this.serverAddress = serverAddress;
-        this.serviceDiscovery = serviceDiscovery;
     }
 
     public <T> Object create(Class<T> cls)

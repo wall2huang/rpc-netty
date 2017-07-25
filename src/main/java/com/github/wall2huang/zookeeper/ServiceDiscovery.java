@@ -5,12 +5,10 @@ package com.github.wall2huang.zookeeper;/**
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.framework.recipes.cache.NodeCacheListener;
-import org.apache.zookeeper.server.quorum.Election;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -22,15 +20,11 @@ public class ServiceDiscovery
     @Autowired
     private CuratorFramework zkClient;
 
-    private String registerAddress;
-
     private List<String> dataList;
 
-    public ServiceDiscovery(String registerAddress) throws Exception
+    public ServiceDiscovery() throws Exception
     {
-        this.registerAddress = registerAddress;
         init();
-
     }
 
     /**

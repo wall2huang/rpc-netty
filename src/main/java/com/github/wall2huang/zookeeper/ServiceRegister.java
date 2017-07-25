@@ -2,6 +2,7 @@ package com.github.wall2huang.zookeeper;/**
  * Created by Administrator on 2017/7/19.
  */
 
+import com.github.wall2huang.configuration.Constant;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.CreateMode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
  **/
 public class ServiceRegister
 {
-    private String serviceName;
-    private String path;
 
     @Autowired
     private CuratorFramework zkClient;
 
-    public ServiceRegister(String serviceName)
+    public ServiceRegister()
     {
-        this.serviceName = serviceName;
-        this.path = "/biz/" + serviceName;
     }
 
     //注册服务名+内容
@@ -31,7 +28,7 @@ public class ServiceRegister
         zkClient.create()
                 .creatingParentsIfNeeded()
                 .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
-                .forPath(path, data.getBytes());
+                .forPath(Constant.ZK_DATA_PATH, data.getBytes());
         //并没有监听这个服务结点
 
     }
