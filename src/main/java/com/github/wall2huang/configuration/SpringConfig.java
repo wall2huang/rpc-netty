@@ -29,27 +29,27 @@ public class SpringConfig
     }
 
     @Bean
-    public ServiceRegister initServiceRegister()
+    public ServiceRegister initServiceRegister(CuratorFramework zkClient)
     {
-        return new ServiceRegister();
+        return new ServiceRegister(zkClient);
     }
 
     @Bean
-    public RpcServer initRpcServer()
+    public RpcServer initRpcServer(ServiceRegister serviceRegister)
     {
-        return new RpcServer(Constant.SERVER_ADDRESS);
+        return new RpcServer(Constant.SERVER_ADDRESS, serviceRegister);
     }
 
     @Bean
-    public ServiceDiscovery initServiceDiscovery() throws Exception
+    public ServiceDiscovery initServiceDiscovery(CuratorFramework zkClient) throws Exception
     {
-        return new ServiceDiscovery();
+        return new ServiceDiscovery(zkClient);
     }
 
     @Bean
-    public RpcProxy initRpcProxy()
+    public RpcProxy initRpcProxy(ServiceDiscovery serviceDiscovery)
     {
-        return new RpcProxy(Constant.SERVER_ADDRESS);
+        return new RpcProxy(Constant.SERVER_ADDRESS, serviceDiscovery);
     }
 
 

@@ -9,12 +9,12 @@ import com.github.wall2huang.zookeeper.ServiceRegister;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -26,42 +26,49 @@ import java.util.Map;
  **/
 public class RpcServer implements ApplicationContextAware, InitializingBean
 {
-    @Autowired
     private ServiceRegister serviceRegister;
 
     private String serviceAddress;
 
     private Map<String, Object> serviceMap = new HashMap<String, Object>();
 
-    public RpcServer(String serviceAddress)
+    public RpcServer(String serviceAddress, ServiceRegister serviceRegister)
     {
         this.serviceAddress = serviceAddress;
+        this.serviceRegister = serviceRegister;
     }
 
     @Override
     public void afterPropertiesSet() throws Exception
     {
-        NioEventLoopGroup nioEventLoopGroup = new NioEventLoopGroup();
+        NioEventLoopGroup bossGroup = new NioEventLoopGroup();
+        NioEventLoopGroup workGroup = new NioEventLoopGroup();
         ServerBootstrap serverBootstrap = new ServerBootstrap();
         try
         {
-            serverBootstrap.group(nioEventLoopGroup)
+            serverBootstrap.group(bossGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
-                    .localAddress(40001)
                     .childHandler(new ChannelInitializer<SocketChannel>()
                     {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception
                         {
                             // 添加编码器和解码器
-                            socketChannel.pipeline().addLast(new RpcDecoder(RpcResponse.class));
-                            socketChannel.pipeline().addLast(new RpcEncoder(RpcRequest.class));
-                            //添加真正业务处理handler
-                            socketChannel.pipeline().addLast(new ServerHandler());
+                            socketChannel.pipeline()
+                                    .addLast(new RpcDecoder(RpcRequest.class))
+                                    .addLast(new RpcEncoder(RpcResponse.class))
+                                    .addLast(new ServerHandler()); //添加真正业务处理handler
 
                         }
-                    });
-            ChannelFuture future = serverBootstrap.bind().sync();
+                    })
+                    .option(ChannelOption.SO_BACKLOG, 128)
+                    .childOption(ChannelOption.SO_KEEPALIVE, true);
+
+            String[] split = serviceAddress.split(":");
+            String host = split[0];
+            int port = Integer.parseInt(split[1]);
+
+            ChannelFuture future = serverBootstrap.bind(host, port).sync();
 
             if (serviceRegister != null)
             {
@@ -69,10 +76,10 @@ public class RpcServer implements ApplicationContextAware, InitializingBean
             }
 
             future.channel().closeFuture().sync();
-        }
-        finally
+        } finally
         {
-            nioEventLoopGroup.shutdownGracefully().sync();
+            bossGroup.shutdownGracefully();
+            workGroup.shutdownGracefully();
         }
 
 

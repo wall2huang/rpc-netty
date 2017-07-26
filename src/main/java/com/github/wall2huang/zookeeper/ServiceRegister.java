@@ -13,12 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  **/
 public class ServiceRegister
 {
-
-    @Autowired
     private CuratorFramework zkClient;
 
-    public ServiceRegister()
+    public ServiceRegister(CuratorFramework zkClient)
     {
+        this.zkClient = zkClient;
     }
 
     //注册服务名+内容

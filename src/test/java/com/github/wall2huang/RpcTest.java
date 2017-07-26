@@ -29,7 +29,7 @@ public class RpcTest
         }else
         {
             HelloService helloService = rpcProxy.create(HelloService.class);
-            helloService.hello("黄展东");
+            System.out.println(helloService.hello("黄展东"));
         }
 
     }

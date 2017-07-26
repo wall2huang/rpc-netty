@@ -20,12 +20,12 @@ public class RpcProxy
 
     private String serverAddress;
 
-    @Autowired
     private ServiceDiscovery serviceDiscovery;
 
-    public RpcProxy(String serverAddress)
+    public RpcProxy(String serverAddress, ServiceDiscovery serviceDiscovery)
     {
         this.serverAddress = serverAddress;
+        this.serviceDiscovery = serviceDiscovery;
     }
 
     public <T> T create(Class<T> cls)

@@ -2,6 +2,7 @@ package com.github.wall2huang.zookeeper;/**
  * Created by Administrator on 2017/7/24.
  */
 
+import com.github.wall2huang.configuration.Constant;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.recipes.cache.NodeCache;
 import org.apache.curator.framework.recipes.cache.NodeCacheListener;
@@ -17,13 +18,13 @@ import java.util.concurrent.ThreadLocalRandom;
  **/
 public class ServiceDiscovery
 {
-    @Autowired
     private CuratorFramework zkClient;
 
     private List<String> dataList;
 
-    public ServiceDiscovery() throws Exception
+    public ServiceDiscovery(CuratorFramework zkClient) throws Exception
     {
+        this.zkClient = zkClient;
         init();
     }
 
@@ -54,7 +55,7 @@ public class ServiceDiscovery
     {
         initDataList();
         //监听本节点的变化
-        final NodeCache nodeCache = new NodeCache(zkClient, "/biz/");
+        final NodeCache nodeCache = new NodeCache(zkClient, Constant.ZK_DATA_PATH);
         nodeCache.getListenable()
                 .addListener(new NodeCacheListener()
                 {
@@ -68,11 +69,11 @@ public class ServiceDiscovery
 
     private void initDataList() throws Exception
     {
-        List<String> services = zkClient.getChildren().forPath("/biz/");
+        List<String> services = zkClient.getChildren().forPath(Constant.ZK_DATA_PATH);
         ArrayList<String> dataList = new ArrayList<>();
         for (String service : services)
         {
-            byte[] bytes = zkClient.getData().forPath("/biz/" + service);
+            byte[] bytes = zkClient.getData().forPath(Constant.ZK_DATA_PATH + service);
             dataList.add(new String(bytes));
         }
         this.dataList = dataList;
