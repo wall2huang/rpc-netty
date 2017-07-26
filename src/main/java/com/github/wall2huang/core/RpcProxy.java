@@ -28,9 +28,9 @@ public class RpcProxy
         this.serverAddress = serverAddress;
     }
 
-    public <T> Object create(Class<T> cls)
+    public <T> T create(Class<T> cls)
     {
-        return Proxy.newProxyInstance(cls.getClassLoader(),
+        return (T) Proxy.newProxyInstance(cls.getClassLoader(),
                 cls.getInterfaces(), new InvocationHandler()
                 {
                     @Override
