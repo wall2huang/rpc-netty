@@ -5,7 +5,6 @@ package com.github.wall2huang.core;/**
 import com.github.wall2huang.transport.RpcRequest;
 import com.github.wall2huang.transport.RpcResponse;
 import com.github.wall2huang.zookeeper.ServiceDiscovery;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

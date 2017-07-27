@@ -57,7 +57,7 @@ public class RpcServer implements ApplicationContextAware, InitializingBean
                             socketChannel.pipeline()
                                     .addLast(new RpcDecoder(RpcRequest.class))
                                     .addLast(new RpcEncoder(RpcResponse.class))
-                                    .addLast(new ServerHandler()); //添加真正业务处理handler
+                                    .addLast(new ServerHandler(serviceMap)); //添加真正业务处理handler
 
                         }
                     })
