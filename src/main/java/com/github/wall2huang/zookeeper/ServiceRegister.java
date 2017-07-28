@@ -26,7 +26,7 @@ public class ServiceRegister
         //现在先先写死服务注册的地址
         zkClient.create()
                 .creatingParentsIfNeeded()
-                .withMode(CreateMode.EPHEMERAL_SEQUENTIAL)
+                .withMode(CreateMode.EPHEMERAL)
                 .forPath(Constant.ZK_DATA_PATH, data.getBytes());
         //并没有监听这个服务结点
 

@@ -44,7 +44,6 @@ public class ServiceDiscovery
             }
             else
             {
-                // TODO: 2017/7/24 ???
                 data = dataList.get(ThreadLocalRandom.current().nextInt(size));
             }
         }
@@ -69,11 +68,13 @@ public class ServiceDiscovery
 
     private void initDataList() throws Exception
     {
-        List<String> services = zkClient.getChildren().forPath(Constant.ZK_DATA_PATH);
+        /** 获得/biz上的子节点**/
+        List<String> nodes = zkClient.getChildren().forPath(Constant.ZK_REGISTER);
         ArrayList<String> dataList = new ArrayList<>();
-        for (String service : services)
+        /** 每个子节点记载着服务的地址 **/
+        for (String node : nodes)
         {
-            byte[] bytes = zkClient.getData().forPath(Constant.ZK_DATA_PATH + service);
+            byte[] bytes = zkClient.getData().forPath(Constant.ZK_REGISTER + "/" + node);
             dataList.add(new String(bytes));
         }
         this.dataList = dataList;

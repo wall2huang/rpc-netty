@@ -5,8 +5,12 @@ package com.github.wall2huang.configuration;
  */
 public interface Constant
 {
-    String ZK_DATA_PATH = "/biz";
+    String ZK_DATA_PATH = "/biz/path";
+
+    String ZK_REGISTER = "/biz";
 
     /** 本机地址 **/
-    String SERVER_ADDRESS = "192.168.0.107:9090";
+    String SERVER_ADDRESS = "192.168.0.103:9090";
+
+
 }

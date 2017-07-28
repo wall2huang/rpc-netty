@@ -17,20 +17,17 @@ import java.util.UUID;
 public class RpcProxy
 {
 
-    private String serverAddress;
-
     private ServiceDiscovery serviceDiscovery;
 
-    public RpcProxy(String serverAddress, ServiceDiscovery serviceDiscovery)
+    public RpcProxy(ServiceDiscovery serviceDiscovery)
     {
-        this.serverAddress = serverAddress;
         this.serviceDiscovery = serviceDiscovery;
     }
 
-    public <T> T create(Class<T> cls)
+    public <T> T create(Class<T> interfacesCls)
     {
-        return (T) Proxy.newProxyInstance(cls.getClassLoader(),
-                cls.getInterfaces(), new InvocationHandler()
+        return (T) Proxy.newProxyInstance(interfacesCls.getClassLoader(),
+                new Class[]{interfacesCls}, new InvocationHandler()
                 {
                     @Override
                     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable
@@ -42,9 +39,10 @@ public class RpcProxy
                         rpcRequest.setParameterType(method.getParameterTypes());
                         rpcRequest.setParameters(args);
 
+                        String serverAddress = "";
                         if (serviceDiscovery != null)
                         {
-                            String serverAddress = serviceDiscovery.discover();
+                            serverAddress = serviceDiscovery.discover();
                         }
                         /** 服务名加端口 **/
                         String[] array = serverAddress.split(":");
@@ -58,7 +56,7 @@ public class RpcProxy
                             throw response.getException();
                         } else
                         {
-                            return response;
+                            return response.getResult();
                         }
                     }
                 });

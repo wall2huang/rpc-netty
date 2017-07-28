@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan
 public class BootStrap
 {
+    /** 这里只会启动服务端 **/
     public static void main(String[] args)
     {
         new AnnotationConfigApplicationContext(BootStrap.class);
