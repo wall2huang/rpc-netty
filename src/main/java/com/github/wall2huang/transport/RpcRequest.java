@@ -2,6 +2,8 @@ package com.github.wall2huang.transport;/**
  * Created by Administrator on 2017/7/20.
  */
 
+import java.util.Arrays;
+
 /**
  * author : Administrator
  * 定义了传输协议，包括反射需要用到的大部分参数，及请求ID
@@ -67,5 +69,17 @@ public class RpcRequest
     public void setParameters(Object[] parameters)
     {
         this.parameters = parameters;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "RpcRequest{" +
+                "requestId='" + requestId + '\'' +
+                ", className='" + className + '\'' +
+                ", methodName='" + methodName + '\'' +
+                ", parameterType=" + Arrays.toString(parameterType) +
+                ", parameters=" + Arrays.toString(parameters) +
+                '}';
     }
 }

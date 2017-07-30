@@ -26,7 +26,6 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse>
         this.port = port;
     }
 
-    // TODO: 2017/7/28 可能是这里卡住了
     @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, RpcResponse rpcResponse) throws Exception
     {
