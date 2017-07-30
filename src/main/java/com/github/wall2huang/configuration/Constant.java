@@ -10,7 +10,7 @@ public interface Constant
     String ZK_REGISTER = "/biz";
 
     /** 本机地址 **/
-    String SERVER_ADDRESS = "192.168.0.103:9090";
+    String SERVER_ADDRESS = "192.168.0.105:9090";
 
 
 }

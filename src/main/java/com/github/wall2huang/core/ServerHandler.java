@@ -27,6 +27,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<RpcRequest>
     @Override
     protected void messageReceived(ChannelHandlerContext ctx, RpcRequest request) throws Exception
     {
+        /** request传输过来除了uuid其他都是Object，toString？参数为空 **/
         RpcResponse response = new RpcResponse();
         response.setRequestId(request.getRequestId());
         try
