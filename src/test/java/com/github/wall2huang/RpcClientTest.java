@@ -4,8 +4,7 @@ package com.github.wall2huang;/**
 
 import com.github.wall2huang.configuration.SpringClientConfig;
 import com.github.wall2huang.core.RpcProxy;
-import com.github.wall2huang.interfaces.IHelloService;
-import com.github.wall2huang.service.HelloService;
+import com.github.wall2huang.configuration.service.IHelloService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

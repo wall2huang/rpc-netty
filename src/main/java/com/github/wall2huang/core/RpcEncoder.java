@@ -22,6 +22,7 @@ public class RpcEncoder extends MessageToByteEncoder
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, Object o, ByteBuf byteBuf) throws Exception
     {
+        System.out.println("这里是encoder,类型是：" + genericClass + ",对象是：" + o);
         if (genericClass.isInstance(o))
         {
             byte[] data = SerializationUtil.serialize(o);

@@ -24,6 +24,7 @@ public class RpcDecoder extends ByteToMessageDecoder
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception
     {
+
         //请求的前四个字节标志了这个请求的数据长度
         if (byteBuf.readableBytes() < 4)
         {
@@ -48,6 +49,9 @@ public class RpcDecoder extends ByteToMessageDecoder
 
         //序列化为对象，添加到out对象列表中去
         Object deserialize = SerializationUtil.deserialize(data, genericClass);
+
+        System.out.println("这里是decoder,类型是：" + genericClass + ",直接反序列化的结果是：" + deserialize);
+
         list.add(deserialize);
 
     }

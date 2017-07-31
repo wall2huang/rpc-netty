@@ -1,4 +1,4 @@
-package com.github.wall2huang.annotation;
+package com.github.wall2huang.configuration.annotation;
 
 import org.springframework.stereotype.Component;
 
@@ -16,5 +16,5 @@ import java.lang.annotation.Target;
 @Component
 public @interface RpcService
 {
-    String value();
+    Class<?> value();
 }

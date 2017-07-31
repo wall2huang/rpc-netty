@@ -44,7 +44,7 @@ public class RpcHandler extends SimpleChannelInboundHandler<RpcRequest>
     }
 
 
-    private Object handler(RpcRequest request) throws Exception, Exception, Exception
+    private Object handler(RpcRequest request) throws Exception
     {
         String className = request.getClassName();
         Object serviceBean = serviceMap.get(className);

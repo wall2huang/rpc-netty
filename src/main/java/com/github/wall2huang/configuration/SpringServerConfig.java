@@ -2,18 +2,22 @@ package com.github.wall2huang.configuration;/**
  * Created by Administrator on 2017/7/19.
  */
 
+import com.github.wall2huang.configuration.service.IHelloService;
+import com.github.wall2huang.configuration.serviceImpl.HelloService;
 import com.github.wall2huang.core.RpcServer;
 import com.github.wall2huang.zookeeper.ServiceRegister;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * author : Administrator
  **/
 @Configuration
+@ComponentScan
 public class SpringServerConfig
 {
     @Bean
@@ -34,6 +38,12 @@ public class SpringServerConfig
     public RpcServer initRpcServer(ServiceRegister serviceRegister)
     {
         return new RpcServer(Constant.SERVER_ADDRESS, serviceRegister);
+    }
+
+    @Bean
+    public IHelloService initHelloService()
+    {
+        return new HelloService();
     }
 
 

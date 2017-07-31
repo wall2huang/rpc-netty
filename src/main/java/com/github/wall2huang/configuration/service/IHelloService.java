@@ -1,4 +1,4 @@
-package com.github.wall2huang.interfaces;/**
+package com.github.wall2huang.configuration.service;/**
  * Created by Administrator on 2017/7/17.
  */
 

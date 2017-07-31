@@ -3,7 +3,7 @@ package com.github.wall2huang;/**
  */
 
 import com.github.wall2huang.core.SerializationUtil;
-import com.github.wall2huang.interfaces.IHelloService;
+import com.github.wall2huang.configuration.service.IHelloService;
 import com.github.wall2huang.transport.RpcRequest;
 
 import java.lang.reflect.Method;

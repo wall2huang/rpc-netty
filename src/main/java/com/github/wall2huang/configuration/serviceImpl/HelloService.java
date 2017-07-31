@@ -1,14 +1,14 @@
-package com.github.wall2huang.service;/**
+package com.github.wall2huang.configuration.serviceImpl;/**
  * Created by Administrator on 2017/7/17.
  */
 
-import com.github.wall2huang.annotation.RpcService;
-import com.github.wall2huang.interfaces.IHelloService;
+import com.github.wall2huang.configuration.annotation.RpcService;
+import com.github.wall2huang.configuration.service.IHelloService;
 
 /**
  * author : Administrator
  **/
-@RpcService("helloService")
+@RpcService(IHelloService.class)
 public class HelloService implements IHelloService
 {
     @Override

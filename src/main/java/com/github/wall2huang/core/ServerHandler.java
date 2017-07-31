@@ -16,7 +16,7 @@ import java.util.Map;
  **/
 public class ServerHandler extends SimpleChannelInboundHandler<RpcRequest>
 {
-
+    /** BUG:handlerMap为空 **/
     private final Map<String, Object> handlerMap;
 
     public ServerHandler(Map<String, Object> handlerMap)

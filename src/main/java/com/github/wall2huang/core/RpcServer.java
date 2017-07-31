@@ -2,7 +2,7 @@ package com.github.wall2huang.core;/**
  * Created by Administrator on 2017/7/19.
  */
 
-import com.github.wall2huang.annotation.RpcService;
+import com.github.wall2huang.configuration.annotation.RpcService;
 import com.github.wall2huang.transport.RpcRequest;
 import com.github.wall2huang.transport.RpcResponse;
 import com.github.wall2huang.zookeeper.ServiceRegister;
@@ -93,8 +93,8 @@ public class RpcServer implements ApplicationContextAware, InitializingBean
         {
             for (Object bean : beansWithAnnotation.values())
             {
-                String serviceName = bean.getClass().getAnnotation(RpcService.class).value();
-                serviceMap.put(serviceName, bean);
+                String interfaceName = bean.getClass().getAnnotation(RpcService.class).value().getName();
+                serviceMap.put(interfaceName, bean);
             }
         }
     }

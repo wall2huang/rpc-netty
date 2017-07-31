@@ -9,6 +9,7 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 
 /**
  * author : Administrator
@@ -49,9 +50,10 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse>
                         @Override
                         protected void initChannel(SocketChannel channel) throws Exception
                         {
-                            channel.pipeline().addLast(new RpcEncoder(RpcRequest.class));
-                            channel.pipeline().addLast(new RpcDecoder(RpcResponse.class));
-                            channel.pipeline().addLast(RpcClient.this);//client实现了SimpleChannelInboundHandler用来处理接受到的请求
+                            channel.pipeline()
+                                    .addLast(new RpcEncoder(RpcRequest.class))
+                                    .addLast(new RpcDecoder(RpcResponse.class))
+                                    .addLast(RpcClient.this);//client实现了SimpleChannelInboundHandler用来处理接受到的请求
                         }
 
                     })
@@ -70,8 +72,7 @@ public class RpcClient extends SimpleChannelInboundHandler<RpcResponse>
                 future.channel().close().sync();
             }
             return rpcResponse;
-        }
-        finally
+        } finally
         {
             nioEventLoopGroup.shutdownGracefully();
         }
